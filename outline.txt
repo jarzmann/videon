@@ -1,6 +1,5 @@
-JobManager
-	RunBackJob
-	RunSureJob
+DBJobManager
+	RunJob {Backup | SureBackup | Replication*****}
 	RunStorageSnap
 	RunZip
 		Mailer
