@@ -1,0 +1,24 @@
+JobManager
+	RunBackJob
+	RunSureJob
+	RunStorageSnap
+	RunZip
+		Mailer
+		Logger
+		Tester
+		PeerSync
+	*RefreshEnv
+	*CreateEnv
+
+BuildConfig {* - Requires build config file }
+	- main config
+	- per job day config
+	
+Conditions
+* Daily bacukp : - PeerSync - RunStorageSnap - mailer  [- RunSureJob  - RefreshEnv - CreateEnv ]
+* Monthly Backup : - PeerSync - RunStorageSnap - mailer  [- RunSureJob - RefreshEnv - CreateEnv ] 
+
+
+
+------------------------------------ BuildConfig --------------------------------------
+$UpdBody = $Body| ConvertTo-Json -Depth 10
