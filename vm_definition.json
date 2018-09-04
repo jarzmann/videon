@@ -1,0 +1,35 @@
+{
+  "_Info": [
+    "This is the JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
+    "",
+    "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
+  ],
+  "InternalInfo": {
+    "project": "VIDEON",
+    "Modified": "04/09/2018",
+    "Author": "FEYIJIMI ADEWOLE <FADEWOLE@FSDHGROUP.COM>",
+    "Support": "NIL",
+    "license": "PUBLIC"
+    "Description": "Production VM's",
+  },
+  "Db_A": {
+    "VmName": "Configuration Version - For future usage only",
+    "Vcenter": "XX.XX.XX",
+    "SureJobName": "Name of the customer company - For future usage only",
+    "VeeamJobName": "YOR CUSTOMER NAME HERE",
+    "_Environment": "Valid is: Production, Dryrun, Leaduser, Testing, Development",
+    "Environment": "Production",
+    "_Support": "This value will be provided by the support team, never change this by yourself!",
+    "Support": "VALUE HERE IF NEEDED"
+  },
+  "Db_B": {
+    "_ConfigVersion": "Configuration Version - For future usage only",
+    "ConfigVersion": "XX.XX.XX",
+    "_Customer": "Name of the customer company - For future usage only",
+    "Customer": "YOR CUSTOMER NAME HERE",
+    "_Environment": "Valid is: Production, Dryrun, Leaduser, Testing, Development",
+    "Environment": "Production",
+    "_Support": "This value will be provided by the support team, never change this by yourself!",
+    "Support": "VALUE HERE IF NEEDED"
+  },
+}
