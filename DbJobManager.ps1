@@ -6,7 +6,7 @@ clear-host
     # Base Directory
     # This must match with the UpdateService/LocalePath entry ($Config.UpdateService.LocalePath)
     # in the JSON configuration file if you want to use the automated update/Distribution features!
-    $global:BaseDirectory = "C:\scripts\PowerShell\"
+    $global:BaseDirectory = "$PSScriptRoot\"
 
     # JSON configuration filename to use
     $global:BaseConfig = "config.json"
