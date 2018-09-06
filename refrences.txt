@@ -1,0 +1,2 @@
+https://kevinmarquette.github.io/2016-10-28-powershell-everything-you-wanted-to-know-about-pscustomobject/   - PscustomObject
+https://kevinmarquette.github.io/2017-03-18-Powershell-reading-and-saving-data-to-files/?utm_source=blog&utm_medium=blog&utm_content=pscustomobject- read & write to filles
