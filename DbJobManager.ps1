@@ -12,9 +12,9 @@
   ) 
 
 #Set-ExecutionPolicy unrestricted
-Import-Module -Name $Directory"_modules\merge-keys.psm1"
+#Import-Module -Name $Directory"_modules\merge-keys.psm1"
 
-#clear-host
+clear-host
 
 #endregion
 
@@ -24,26 +24,26 @@ Import-Module -Name $Directory"_modules\merge-keys.psm1"
     # Base Directory
     # This must match with the UpdateService/LocalePath entry ($Config.UpdateService.LocalePath)
     # in the JSON configuration file if you want to use the automated update/Distribution features!
-    $global:BaseDirectory = "$Directory"
-    $global:ConfigDirectory = $Directory+"_config\"
-    $global:DailyConfigDirectory = $Directory+"_daily_config\"
+    $BaseDirectory = "$Directory"
+    $ConfigDirectory = $Directory+"_config\"
+    $DailyConfigDirectory = $Directory+"_daily_config\"
 
     # JSON configuration filename to use
-    $global:BaseConfig = "config.json"
+    $BaseConfig = "config.json"
 
     # JSON environment configuration filename to use
-    $global:EnvConfigFile = "$RuntimeEnv.json"
+    $EnvConfigFile = "$RuntimeEnv.json"
 
     # JSON configuration filename for current date
     $curdate = Get-Date -format ddMMyyyy
-    $global:CurrentConfigFile = "$curdate.json"
+    $CurrentConfigFile = "$curdate.json"
 
     If(!(test-path "$ConfigDirectory$BaseConfig"))
     {
           Write-Output "--  The Base configuration file is missing!  --"
     } else {
               ## Load Default Config file
-              $global:Config = Get-Content "$ConfigDirectory$BaseConfig" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+              $Config = Get-Content "$ConfigDirectory$BaseConfig" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
               Write-Output "Base Config file loaded"
     }
     # Check the configuration
@@ -57,7 +57,7 @@ Import-Module -Name $Directory"_modules\merge-keys.psm1"
           Write-Output "--  No configuration file for $RuntimeEnv !  --"
     } else {
               ## Load Runtime Environment Config file
-              $global:EnvConfig = Get-Content "$ConfigDirectory$EnvConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+              $EnvConfig = Get-Content "$ConfigDirectory$EnvConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
               Write-Output "Runtime Environment Config file loaded"
     }
 
@@ -68,7 +68,7 @@ Import-Module -Name $Directory"_modules\merge-keys.psm1"
           Write-Output "--  No configuration file for current day!  --"
     } else {
               ## Load Current Day's Config file
-              $global:CurrentConfig = Get-Content "$DailyConfigDirectory$CurrentConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+              $CurrentConfig = Get-Content "$DailyConfigDirectory$CurrentConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
               Write-Output "Current Day's Config file loaded"
     }
 

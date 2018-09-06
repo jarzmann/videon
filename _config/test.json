@@ -13,6 +13,8 @@
   "RunSnapshot": "false",
   "LogToConsole": "6",
   "LogToFile": "6",
+  "BackupZipDirectory": "\\\\fsdh.net\\fsdh_fs\\FsdhDb\\Backup_Test\\",
+  "EOMZipDirectory": "\\\\fsdh.net\\fsdh_fs\\FsdhDb\\EOM_Backup_Test\\",
 	"LogDirectory": "C:\\BkLog\\TestLogs\\",
 	"ZipDirectory": "C:\\ZIPBackup_Test\\"
 }
