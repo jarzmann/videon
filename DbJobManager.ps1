@@ -35,7 +35,7 @@ clear-host
     }
     # Check the configuration
     if (!($Config)) {
-              Write-Output -Message "--  The Base configuration file could not be loaded! --"
+              Write-Output -Message "---  The Base configuration file could not be loaded! --"
     }
 
 #endregion
