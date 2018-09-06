@@ -1,0 +1,18 @@
+{
+  "_Info": [
+    "This is the TEST JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
+    "",
+    "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
+  ],
+  "SmtpServer": "email2.fsdhgroup.com",
+  "Smtpfrom": "veeam@fsdhgroup.com",
+  "Smtpto": "fadewole@fsdhgroup.com",
+  "Environment": "Test",
+  "FormatHTML": "false",
+  "RunSureJob": "false",
+  "RunSnapshot": "false",
+  "LogToConsole": "6",
+  "LogToFile": "6",
+	"LogDirectory": "C:\\BkLog\\TestLogs\\",
+	"ZipDirectory": "C:\\ZIPBackup_Test\\"
+}

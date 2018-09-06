@@ -1,0 +1,18 @@
+{
+  "_Info": [
+    "This is the DRYRUN JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
+    "",
+    "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
+  ],
+  "SmtpServer": "email2.fsdhgroup.com",
+  "Smtpfrom": "veeam@fsdhgroup.com",
+  "Smtpto": "fadewole@fsdhgroup.com",
+  "Environment": "Dryrun",
+  "FormatHTML": "True",
+  "RunSureJob": "True",
+  "RunSnapshot": "True",
+  "LogToConsole": "6",
+  "LogToFile": "6",
+	"LogDirectory": "C:\\BkLog\\TestLogs\\",
+	"ZipDirectory": "C:\\ZIPBackup_Test\\"
+}

@@ -1,6 +1,6 @@
 {
   "_Info": [
-    "This is the JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
+    "This is the BASE JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
     "",
     "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
   ],
@@ -12,68 +12,21 @@
     "license": "PUBLIC",
     "ConfigVersion": "1.0.1"
   },
-  "Default": {
-    "SmtpServer": "email2.fsdhgroup.com",
-    "Smtpfrom": "veeam@fsdhgroup.com",
-    "Smtpto": "fadewole@fsdhgroup.com",
-    "Environment": "Development",
-    "FormatHTML": "True",
-    "RunSureJob": "True",
-    "RunSnapshot": "True",
-    "LogToConsole": "True",
-    "LogToFile": "True",
+  "Settings": {
+  "SmtpServer": "email2.fsdhgroup.com",
+  "Smtpfrom": "veeam@fsdhgroup.com",
+  "Smtpto": "fadewole@fsdhgroup.com",
+  "Environment": "Development",
+  "FormatHTML": "True",
+  "RunSureJob": "True",
+  "RunSnapshot": "True",
+  "LogToConsole": "True",
+  "LogToFile": "True",
 	"LogDirectory": "C:\\BkLog\\RunLogs\\",
 	"ZipDirectory": "C:\\ZIPBackup\\",
-	"BackupZipDirectory": "\\\fsdh.net\\fsdh_fs\\FsdhDb\\EOM_Backup\\",
-	"EOMZipDirectory": "\\\fsdh.net\\fsdh_fs\\FsdhDb\\EOM_Backup\\",
-    "_Loglevel": "Valid is: ALL(6) < DEBUG(1) < INFO(2) < WARN(3) < ERROR(4) < FATAL(5) < OFF(0).",
-    "Loglevel": "6"
-  },
-  "Production": {
-    "SmtpServer": "email2.fsdhgroup.com",
-    "Smtpfrom": "veeam@fsdhgroup.com",
-    "Smtpto": "isteam@fsdhgroup.com",
-    "Environment": "Production",
-    "FormatHTML": "True",
-    "RunSureJob": "True",
-    "RunSnapshot": "True",
-    "LogToConsole": "0",
-    "LogToFile": "2"
-  },
-  "Testing": {
-    "SmtpServer": "email2.fsdhgroup.com",
-    "Smtpfrom": "veeam@fsdhgroup.com",
-    "Smtpto": "fadewole@fsdhgroup.com",
-    "Environment": "Testing",
-    "FormatHTML": "false",
-    "RunSureJob": "false",
-    "RunSnapshot": "false",
-    "LogToConsole": "6",
-    "LogToFile": "6",
-	"LogDirectory": "C:\\BkLog\\TestLogs\\",
-	"ZipDirectory": "C:\\ZIPBackup_Test\\"
-  },
-  "Dryrun": {
-    "SmtpServer": "email2.fsdhgroup.com",
-    "Smtpfrom": "veeam@fsdhgroup.com",
-    "Smtpto": "fadewole@fsdhgroup.com",
-    "Environment": "Dryrun",
-    "FormatHTML": "True",
-    "RunSureJob": "True",
-    "RunSnapshot": "True",
-    "LogToConsole": "6",
-    "LogToFile": "6",
-	"LogDirectory": "C:\\BkLog\\TestLogs\\",
-	"ZipDirectory": "C:\\ZIPBackup_Test\\"
-  },
-  "Basic": {
-    "_ConfigVersion": "Configuration Version - For future usage only",
-    "ConfigVersion": "XX.XX.XX",
-    "_Customer": "Name of the customer company - For future usage only",
-    "Customer": "YOR CUSTOMER NAME HERE",
-    "_Environment": "Valid is: Production, Dryrun, Leaduser, Testing, Development",
-    "Environment": "Production",
-    "_Support": "This value will be provided by the support team, never change this by yourself!",
-    "Support": "VALUE HERE IF NEEDED"
+	"BackupZipDirectory": "\\fsdh.net\\fsdh_fs\\FsdhDb\\EOM_Backup\\",
+	"EOMZipDirectory": "\\fsdh.net\\fsdh_fs\\FsdhDb\\EOM_Backup\\",
+  "_Loglevel": "Valid is: ALL(6) < DEBUG(1) < INFO(2) < WARN(3) < ERROR(4) < FATAL(5) < OFF(0).",
+  "Loglevel": "6"
   }
 }

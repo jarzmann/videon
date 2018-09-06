@@ -1,4 +1,3 @@
-﻿Set-ExecutionPolicy unrestricted
 ﻿#region Load Job Parameters
   Param 
   ( 

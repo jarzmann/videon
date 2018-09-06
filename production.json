@@ -1,0 +1,18 @@
+{
+  "_Info": [
+    "This is the PRODUCTION JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
+    "",
+    "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
+  ],
+  "Settings": {
+  "SmtpServer": "email2.fsdhgroup.com",
+  "Smtpfrom": "veeam@fsdhgroup.com",
+  "Smtpto": "isteam@fsdhgroup.com",
+  "Environment": "Production",
+  "FormatHTML": "True",
+  "RunSureJob": "True",
+  "RunSnapshot": "True",
+  "LogToConsole": "0",
+  "LogToFile": "2"
+  }
+}
