@@ -1,13 +1,20 @@
 ﻿Set-ExecutionPolicy unrestricted
 clear-host
 
+#endregion
+
+
 #region Load Base Config
 
     # Base Directory
     # This must match with the UpdateService/LocalePath entry ($Config.UpdateService.LocalePath)
     # in the JSON configuration file if you want to use the automated update/Distribution features!
+<<<<<<< HEAD
     $global:BaseDirectory = "$PSScriptRoot\"
 
+=======
+    $global:BaseDirectory = $Directory
+>>>>>>> 991007547548ef6c92f4ccf81c75c8c9eb36c2cd
     # JSON configuration filename to use
     $global:BaseConfig = "config.json"
 
@@ -21,7 +28,7 @@ clear-host
     }
     # Check the configuration
     if (!($Config)) {
-              Write-Output -Message "--  The Base configuration file could not be loaded! --"
+              Write-Output -Message "---  The Base configuration file could not be loaded! --"
     }
 
 #endregion
@@ -31,9 +38,9 @@ clear-host
     $global:ConfigVersion = ($Config.basic.ConfigVersion)
 
     # Customer Info (For future use)
-    $global:Company = ($Config.basic.Customer)
+    $global:Company = ($Config.$RunEnv.Customer)
 
     # Environment (Production, Leaduser, Testing, Development)
-    $global:environment = ($Config.basic.environment)
+    $global:environment = ($Config.$RunEnv.environment)
 
 #endregion
