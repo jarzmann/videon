@@ -1,19 +1,15 @@
 ﻿#region Load Job Parameters
   Param 
   ( 
-    [Parameter(Mandatory=$true)]
     [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()] 
     [ValidateSet("Production","Testing","Dryrun")] 
-    [string]$RunEnv="Production",
     [string]$RuntimeEnv="Production",
 
     [Parameter(Mandatory=$false)] 
     [Alias('Dir')] 
-    [string]$Directory="C:\scripts\PowerShell\"
+    [string]$Directory="c:\videon\"
   ) 
-Set-ExecutionPolicy unrestricted
-clear-host
 
 #Set-ExecutionPolicy unrestricted
 Import-Module -Name $Directory"_modules\merge-keys.psm1"
@@ -28,24 +24,26 @@ Import-Module -Name $Directory"_modules\merge-keys.psm1"
     # Base Directory
     # This must match with the UpdateService/LocalePath entry ($Config.UpdateService.LocalePath)
     # in the JSON configuration file if you want to use the automated update/Distribution features!
-<<<<<<< HEAD
-    $global:BaseDirectory = "$PSScriptRoot\"
     $global:BaseDirectory = "$Directory"
     $global:ConfigDirectory = $Directory+"_config\"
     $global:DailyConfigDirectory = $Directory+"_daily_config\"
 
-=======
-    $global:BaseDirectory = $Directory
->>>>>>> 991007547548ef6c92f4ccf81c75c8c9eb36c2cd
     # JSON configuration filename to use
     $global:BaseConfig = "config.json"
 
-    If(!(test-path "$BaseDirectory$BaseConfig"))
+    # JSON environment configuration filename to use
+    $global:EnvConfigFile = "$RuntimeEnv.json"
+
+    # JSON configuration filename for current date
+    $curdate = Get-Date -format ddMMyyyy
+    $global:CurrentConfigFile = "$curdate.json"
+
+    If(!(test-path "$ConfigDirectory$BaseConfig"))
     {
           Write-Output "--  The Base configuration file is missing!  --"
     } else {
               ## Load Default Config file
-              $global:Config = Get-Content "$BaseDirectory$BaseConfig" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+              $global:Config = Get-Content "$ConfigDirectory$BaseConfig" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
               Write-Output "Base Config file loaded"
     }
     # Check the configuration
@@ -53,16 +51,41 @@ Import-Module -Name $Directory"_modules\merge-keys.psm1"
               Write-Output -Message "---  The Base configuration file could not be loaded! --"
     }
 
+    # Check and load custom config for today
+    If(!(test-path "$ConfigDirectory$EnvConfigFile"))
+    {
+          Write-Output "--  No configuration file for $RuntimeEnv !  --"
+    } else {
+              ## Load Runtime Environment Config file
+              $global:EnvConfig = Get-Content "$ConfigDirectory$EnvConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+              Write-Output "Runtime Environment Config file loaded"
+    }
+
+
+    # Check and load custom config for today
+    If(!(test-path "$DailyConfigDirectory$CurrentConfigFile"))
+    {
+          Write-Output "--  No configuration file for current day!  --"
+    } else {
+              ## Load Current Day's Config file
+              $global:CurrentConfig = Get-Content "$DailyConfigDirectory$CurrentConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+              Write-Output "Current Day's Config file loaded"
+    }
+
+
 #endregion
 
 #region Read Config
-
-    $global:ConfigVersion = ($Config.basic.ConfigVersion)
-
-    # Customer Info (For future use)
-    $global:Company = ($Config.$RunEnv.Customer)
-
-    # Environment (Production, Leaduser, Testing, Development)
-    $global:environment = ($Config.$RunEnv.environment)
-
+    if ($EnvConfig)
+    {
+        $EnvConfig.psobject.Properties | ForEach-Object {
+        $Config | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
+        }
+        if ($CurrentConfig)
+        {
+            $CurrentConfig.psobject.Properties | ForEach-Object {
+            $Config | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
+            }
+        }
+    }  
 #endregion
