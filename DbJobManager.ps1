@@ -2,9 +2,11 @@
   Param 
   ( 
     [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [ValidateNotNullOrEmpty()] 
     [ValidateSet("Production","Testing","Dryrun")] 
     [string]$RunEnv="Production",
+    [string]$RuntimeEnv="Production",
 
     [Parameter(Mandatory=$false)] 
     [Alias('Dir')] 
@@ -12,6 +14,11 @@
   ) 
 Set-ExecutionPolicy unrestricted
 clear-host
+
+#Set-ExecutionPolicy unrestricted
+Import-Module -Name $Directory"_modules\merge-keys.psm1"
+
+#clear-host
 
 #endregion
 
@@ -23,6 +30,9 @@ clear-host
     # in the JSON configuration file if you want to use the automated update/Distribution features!
 <<<<<<< HEAD
     $global:BaseDirectory = "$PSScriptRoot\"
+    $global:BaseDirectory = "$Directory"
+    $global:ConfigDirectory = $Directory+"_config\"
+    $global:DailyConfigDirectory = $Directory+"_daily_config\"
 
 =======
     $global:BaseDirectory = $Directory
