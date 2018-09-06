@@ -1,13 +1,27 @@
-﻿Set-ExecutionPolicy unrestricted
+﻿#region Load Job Parameters
+  Param 
+  ( 
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()] 
+    [ValidateSet("Production","Testing","Dryrun")] 
+    [string]$RunEnv="Production",
+
+    [Parameter(Mandatory=$false)] 
+    [Alias('Dir')] 
+    [string]$Directory="C:\scripts\PowerShell\"
+  ) 
+Set-ExecutionPolicy unrestricted
 clear-host
+
+#endregion
+
 
 #region Load Base Config
 
     # Base Directory
     # This must match with the UpdateService/LocalePath entry ($Config.UpdateService.LocalePath)
     # in the JSON configuration file if you want to use the automated update/Distribution features!
-    $global:BaseDirectory = "C:\scripts\PowerShell\"
-
+    $global:BaseDirectory = $Directory
     # JSON configuration filename to use
     $global:BaseConfig = "config.json"
 
@@ -31,9 +45,9 @@ clear-host
     $global:ConfigVersion = ($Config.basic.ConfigVersion)
 
     # Customer Info (For future use)
-    $global:Company = ($Config.basic.Customer)
+    $global:Company = ($Config.$RunEnv.Customer)
 
     # Environment (Production, Leaduser, Testing, Development)
-    $global:environment = ($Config.basic.environment)
+    $global:environment = ($Config.$RunEnv.environment)
 
 #endregion
