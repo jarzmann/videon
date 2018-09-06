@@ -1,0 +1,13 @@
+{
+  "_Info": [
+    "This is the SEPT 6TH JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
+    "",
+    "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
+  ],
+  "SmtpServer": "september6th.fsdhgroup.com",
+  "Smtpfrom": "september6th@fsdhgroup.com",
+  "Smtpto": "september6th-staff@fsdhgroup.com",
+  "LogToConsole": "0",
+	"LogDirectory": "C:\\BkLog\\september6th\\",
+	"ZipDirectory": "C:\\ZIPBackup_Test_september6th\\"
+}
