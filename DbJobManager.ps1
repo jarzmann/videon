@@ -1,4 +1,17 @@
 ﻿Set-ExecutionPolicy unrestricted
+﻿#region Load Job Parameters
+  Param 
+  ( 
+    [Parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()] 
+    [ValidateSet("Production","Testing","Dryrun")] 
+    [string]$RunEnv="Production",
+
+    [Parameter(Mandatory=$false)] 
+    [Alias('Dir')] 
+    [string]$Directory="C:\scripts\PowerShell\"
+  ) 
+Set-ExecutionPolicy unrestricted
 clear-host
 
 #endregion
