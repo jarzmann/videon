@@ -43,7 +43,7 @@ clear-host
           Write-Output "--  The Base configuration file is missing!  --"
     } else {
               ## Load Default Config file
-              $Config = Get-Content "$ConfigDirectory$BaseConfig" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+              $global:Config = Get-Content "$ConfigDirectory$BaseConfig" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
               Write-Output "Base Config file loaded"
     }
     # Check the configuration
