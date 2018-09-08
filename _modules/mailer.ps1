@@ -5,25 +5,25 @@
     (
         [string]$VeeamJobName,
         [switch]$RunSureJob = $true,
-        [string]$MailTo = "isteam@fsdhgroup.com",
-        [string]$SureJobName = "1.     DB-OFCUBS <backup>",
-        [switch]$ForceSure = $false,
-        [string]$VeeamServer = "192.168.0.134",
-        [switch]$Testing = $false,
-        [switch]$SnapshotJob = $true
+        [string]$MailTo,
+        #[string]$SureJobName = "1.     DB-OFCUBS <backup>",
+        #[switch]$ForceSure = $false,
+        [string]$VeeamServer
+        #[switch]$Testing = $false,
+        #[switch]$SnapshotJob = $true
     )
 
-        $VmName = switch ($VeeamJobName) 
+    <#    $VmName = switch ($VeeamJobName) 
     { 
         DBOFCUBS_HO_PRE-EOD {"DB-OFCUBS-Prod_finclose_14052018"} 
         DBOFCUBS_RC_PRE-EOD {"Flexcube Database and Symplus Database"} 
-    }
+    }#>
 
 
     # Clear console output
     Clear-Host
 
-    Import-Module -Name 'C:\scripts\ps\write-log.psm1'
+    Import-Module -Name '.\_module\write-log.psm1' 
 
 
     if ($Testing)
