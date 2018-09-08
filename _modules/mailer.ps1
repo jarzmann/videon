@@ -1,4 +1,4 @@
-﻿#region Initiate Session
+#region Initiate Session
 
     # Get parameters or load defalt values
     param
@@ -23,26 +23,14 @@
     # Clear console output
     Clear-Host
 
-    Import-Module -Name '.\_module\write-log.psm1' 
+    Import-Module -Name '.\_modules\write-log.psm1' -force
 
 
-    if ($Testing)
+    foreach ($key in $MyInvocation.BoundParameters.keys)
     {
-        $RunSureJob = $false
-        $ForceSure = $false
-        $MailTo = "fadewole@fsdhgroup.com"
-        $SnapshotJob = $false
-
-        foreach ($key in $MyInvocation.BoundParameters.keys)
-        {
-            $value = (get-variable $key).Value 
-            write-host "$key -> $value"
-        }
-
-        write-log -Message 'Test mode' -Level 'info' -LogFileName $VeeamJobName
-
+        $value = (get-variable $key).Value 
+        write-log -Message "$key -> $value" -Level 'info'
     }
-
 
     # Load Veeam snapin
     Add-PsSnapin -Name VeeamPSSnapIn -ErrorAction SilentlyContinue
@@ -70,7 +58,7 @@
     # Email TO
     $EmailTo = $MailTo
     # Email subject
-    $EmailSubject = $VeeamJobName+“ Backup Task Completed”
+    $EmailSubject = "$VeeamJobName Backup Task Completed"
     # Email formatting
     $style = “<style>BODY{font-family: Arial; font-size: 10pt;}”
     $style = $style + “TABLE{border: 1px solid black; border-collapse: collapse;}”

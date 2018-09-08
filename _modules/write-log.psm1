@@ -1,4 +1,4 @@
-﻿<# 
+<# 
 .Synopsis 
    Write-Log writes a message to a specified log file with the current time stamp. 
 .DESCRIPTION 
@@ -52,81 +52,69 @@ function Write-Log
         [string]$Message, 
  
         [Parameter(Mandatory=$false)] 
+        [Alias('Dirlog')] 
+        [string]$LogDirPath=$Config.LogDirectory, 
+
+        [Parameter(Mandatory=$false)] 
         [Alias('Filelog')] 
-        [string]$LogFileName='PowerShellLog', 
+        [string]$LogFileName=$Config.LogFileName, 
          
         [Parameter(Mandatory=$false)] 
         [ValidateSet("Error","Warn","Info")] 
         [string]$Level="Info", 
          
         [Parameter(Mandatory=$false)] 
-        [ValidateSet("Console","File","Both")] 
-        [string]$LogOutput="File", 
-         
+        [switch]$LogToConsole=[System.Convert]::ToBoolean($Config.LogToConsole), 
+
         [Parameter(Mandatory=$false)] 
-        [switch]$NoClobber 
+        [switch]$LogToFile=[System.Convert]::ToBoolean($Config.LogToFile)      
     ) 
  
     Begin 
     { 
         # Set VerbosePreference to Continue so that verbose messages are displayed. 
-        $VerbosePreference = 'Continue' 
+        $VerbosePreference = $Config.VerbosePreference 
 
-    } 
-    Process 
-    { 
-        
         #Get Log file time
         $LogTime = Get-Date -Format yyyyMMdd
 
         #Set Log file path
-        $Path="C:\BkLog\RunLogs\$LogFileName\$LogFileName - $LogTime.log"
+        $Path="$LogDirPath$LogFileName-$LogTime.log"
+    } 
 
-
-        if (($LogOutput -eq "File") -or ($LogOutput -eq "Both")) {
-            # If the file already exists and NoClobber was specified, do not write to the log. 
-            if ((Test-Path $Path) -AND $NoClobber) { 
-                Write-Error "Log file $Path already exists, and you specified NoClobber. Either delete the file or specify a different name." 
-                Return 
-                } 
- 
-            # If attempting to write to a log file in a folder/path that doesn't exist create the file including the path. 
-            elseif (!(Test-Path $Path)) { 
-                Write-Verbose "Creating $Path." 
-                $NewLogFile = New-Item $Path -Force -ItemType File 
-                } 
- 
-            else { 
-                # Nothing to see here yet. 
-                }
+    Process 
+    { 
+        #Write Director - Writes to File, Console or Both
+        function Rewrite($message)
+        {
+            if ($LogToFile) {$Message | Out-File -FilePath $Path -Append}
+            if ($LogToConsole) 
+            {
+              # Write message to error, warning, or verbose pipeline and specify $LevelText 
+              switch ($Level) { 
+                'Error' {Write-Output $Message} 
+                'Warn' {Write-Warning $Message } 
+                'Info' {Write-Host $Message} 
+              } 
+            }
         }
+
+        if (!(Test-Path $Path)) 
+        { 
+            $NewLogFile = New-Item $Path -Force -ItemType File
+            Rewrite "Creating $Path" 
+
+          } 
  
         # Format Date for our Log File 
         $FormattedDate = Get-Date -Format "yyyy-MM-dd HH:mm:ss" 
  
-        # Write message to error, warning, or verbose pipeline and specify $LevelText 
-        switch ($Level) { 
-            'Error' { 
-                Write-Output $Message
-                $LevelText = 'ERROR:'
-                } 
-            'Warn' { 
-                Write-Warning $Message 
-                $LevelText = 'WARNING:' 
-                } 
-            'Info' { 
-                Write-Verbose $Message 
-                $LevelText = 'INFO:' 
-                } 
-            } 
-         
         # Write log entry to $Path 
-        if (($LogOutput -eq "File") -or ($LogOutput -eq "Both")) { "$FormattedDate $LevelText $Message" | Out-File -FilePath $Path -Append }
-         
-        # Write log entry to Console 
-        if (($LogOutput -eq "Console") -or ($LogOutput -eq "Both")) {"$FormattedDate $LevelText $Message" | Out-Host}
+        Rewrite "$FormattedDate $LevelText $Message"
     } 
     End 
     { 
     } 
 }
+
+

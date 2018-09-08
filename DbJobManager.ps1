@@ -1,4 +1,4 @@
-﻿#region Load Job Parameters
+#region Load Job Parameters
   Param 
   ( 
     [Parameter(Mandatory=$false)]
@@ -75,7 +75,7 @@ clear-host
 
 #endregion
 
-#region Read Config
+#region Create Job Config Values from loaded config files
     if ($EnvConfig)
     {
         $EnvConfig.psobject.Properties | ForEach-Object {
@@ -88,4 +88,26 @@ clear-host
             }
         }
     }  
+#endregion
+
+
+
+#region Run Sure Backup Job
+
+#endregion
+
+#region Run  Snapshot Job
+
+#endregion
+
+#region Run Zip Job
+
+#endregion
+
+#region Refresh Environment
+
+#endregion
+
+#region Create Environment
+
 #endregion

@@ -11,6 +11,8 @@
   "FormatHTML": "True",
   "RunSureJob": "True",
   "RunSnapshot": "True",
-  "LogToConsole": "0",
-  "LogToFile": "2"
+  "LogToConsole": "False",
+  "Loglevel": "2",
+  "LogToFile": "True",
+  "VerbosePreference": "SilentlyContinue"
 }
