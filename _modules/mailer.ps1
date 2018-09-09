@@ -4,13 +4,8 @@
     param
     (
         [string]$VeeamJobName,
-        [switch]$RunSureJob = $true,
-        [string]$MailTo,
-        #[string]$SureJobName = "1.     DB-OFCUBS <backup>",
-        #[switch]$ForceSure = $false,
-        [string]$VeeamServer
-        #[switch]$Testing = $false,
-        #[switch]$SnapshotJob = $true
+        [string]$MailTo=$Config.Smtpto,
+        [string]$VeeamServer=$Config.VeeamServer
     )
 
     <#    $VmName = switch ($VeeamJobName) 
@@ -32,39 +27,27 @@
         write-log -Message "$key -> $value" -Level 'info'
     }
 
-    # Load Veeam snapin
-    Add-PsSnapin -Name VeeamPSSnapIn -ErrorAction SilentlyContinue
+    # Load Veeam snapin & Connect to Veeam
+#. .\_modules\veeamconnect.ps1
 
-    #Get existimh session to Veeam Server
-    $w = Get-VBRServerSession
-
-    # Create session if none exists
-    if (!$w)
-    {
-        $Credentials=IMPORT-CLIXML C:\scripts\xml\SecureCredentials.xml
-        Connect-VBRServer -Credential $Credentials -Server $VeeamServer
-    }
-
-   # $file = Get-Date -format yyyyMMdd
-   # $Path = "C:\PreEODBkLog\"+$file+".txt"
     $starttime = Get-Date -format t
 #endregion
 
 #region Email Settings
     # Email SMTP server
-    $SMTPServer = “email2.fsdhgroup.com”
+    $SMTPServer = $Config.SmtpServer
     # Email FROM
-    $EmailFrom = “veeam@fsdhgroup.com”
+    $EmailFrom = $Config.Smtpfrom
     # Email TO
-    $EmailTo = $MailTo
+    $EmailTo = $Config.Smtpto
     # Email subject
     $EmailSubject = "$VeeamJobName Backup Task Completed"
     # Email formatting
-    $style = “<style>BODY{font-family: Arial; font-size: 10pt;}”
+   <# $style = “<style>BODY{font-family: Arial; font-size: 10pt;}”
     $style = $style + “TABLE{border: 1px solid black; border-collapse: collapse;}”
-    $style = $style + “TH{border: 1px solid black; background: #54b948; padding: 5px; }”
-    $style = $style + “TD{border: 1px solid black; padding: 5px;text-align: center; }”
-    $style = $style + “</style>”
+    $style = $style + “TH{border: 1px solid black; background: 54b948; padding: 5px;}”
+    $style = $style + “TD{border: 1px solid black; padding: 5px;text-align: center;}”
+    $style = $style + “</style>”#>
 #endregion
 
 #region Generate Email body content
@@ -100,49 +83,10 @@
 #region Send Email
     $Message = New-Object System.Net.Mail.MailMessage $EmailFrom, $EmailTo
     $Message.Subject = $EmailSubject
-    $Message.IsBodyHTML = $True
+    $Message.IsBodyHTML = [System.Convert]::ToBoolean($Config.FormatHTML)
     $message.Body = "$CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
     $SMTP = New-Object Net.Mail.SmtpClient($SMTPServer)
     $SMTP.Send($Message)
-    write-log -Message 'Test mode' -Level 'info' -LogFileName $VeeamJobName
+    write-log -Message 'Mail sent' -Level 'info'
 #endregion
 
-#region SureBackup Job Config
-
-    $now = Get-Date
-    # Official Work hours 7am to 7pm
-    $OfficialWorkHours = (-not($now -ge (Get-Date 07:00) -and $now -lt (Get-Date 19:00)))
-    $RequestedJob = ("DBOFCUBS_HO_PRE-EOD" -or "DBOFCUBS_RC_PRE-EOD") 
-
-    # Surebackup is enabled and runtime is outside working hours
-    if ($RunSureJob -and $OfficialWorkHours -and $RequestedJob)
-    {   
-        
-        Get-VSBJob -Name "1.     DB-OFCUBS <backup>" | Start-VSBJob -RunAsync
-
-    }
-#endregion
-
-#region Stororage Snapshot Job Config
-    # SnapshotJob is enabled and runtime is outside working hours
-    if ($SnapshotJob -and $OfficialWorkHours -and $RequestedJob)
-    {   
-        
-        Get-VBRJob -Name "DB-OFCUBS - Storage Snapshot" | Start-VBRJob -RunAsync
-
-    }
-#endregion
-
-#region EOM Job Config
-    # Get last working day in current month
-    $LastWorkingWeekDay =  Get-Date ((get-date).addmonths(1)).adddays(-(get-date ((get-date).addmonths(1)) -format dd)) -Format d
-    $today = Get-Date -Format d
-
-    # VeeamZip if today is Last Working Day
-    if ($LastWorkingWeekDay -eq $today)
-    {   
-        $vm = Find-VBRViEntity -Name "DB-OFCUBS-Prod_finclose_14052018"
-        Start-VBRZip -Entity $vm -Compression 4 -DisableQuiesce -AutoDelete Never -RunAsync
-
-    }
-#endregion

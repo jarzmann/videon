@@ -92,12 +92,16 @@ clear-host
 
 
 
+#region Run Mailer
+. .\_modules\Mailer.ps1
+
+#endregion
+
 #region Run Sure Backup Job
 
 #endregion
 
 #region Run  Snapshot Job
-
 #endregion
 
 #region Run Zip Job

@@ -15,6 +15,7 @@
   "SmtpServer": "email2.fsdhgroup.com",
   "Smtpfrom": "veeam@fsdhgroup.com",
   "Smtpto": "fadewole@fsdhgroup.com",
+  "VeeamServer": "192.168.0.134",
   "Environment": "Development",
   "FormatHTML": "True",
   "RunSureJob": "True",
