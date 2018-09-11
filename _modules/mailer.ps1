@@ -66,7 +66,7 @@
 #region Generate Email body content
     if($w)
     {
-        
+        write-log -Message 'Existing Veeam Server Session reused' -Level 'info'
         $LoggedIn = $w.Split("\")
         $mbody = New-Object PSObject -Property @{
            'Name' = $VeeamJobName
@@ -76,7 +76,10 @@
         }
         $job = Get-VBRJob -Name $VeeamJobName
         $jobhistory = Get-VBRBackupSession | Where {$_.jobId -eq $job.Id.Guid} | Sort EndTimeUTC -Descending | Select -First 5    
+        write-log -Message 'Job &Job History successful loaded' -Level 'info'
     }else{
+
+        write-log -Message 'Sample Dataset loaded and/or dryrun in effect ' -Level 'info'
         $mbody = New-Object PSObject -Property @{
            'Name' = $VeeamJobName
            'End Time' = $starttime
