@@ -56,11 +56,11 @@
     # Email subject
     $EmailSubject = "$VeeamJobName Backup Task Completed"
     # Email formatting
-    $style = “<style>BODY{font-family: Arial; font-size: 10pt;}”
-    $style = $style + “TABLE{border: 1px solid black; border-collapse: collapse;}”
-    $style = $style + “TH{border: 1px solid black; background: 54b948; padding: 5px;}”
-    $style = $style + “TD{border: 1px solid black; padding: 5px;text-align: center;}”
-    $style = $style + “</style>”
+    $style = '<style>BODY{font-family: Arial; font-size: 10pt;}'
+    $style += “TABLE{border: 1px solid black; border-collapse: collapse;}”
+    $style += “TH{border: 1px solid black; background: 54b948; padding: 5px;}”
+    $style += “TD{border: 1px solid black; padding: 5px;text-align: center;}”
+    $style += “</style>”
 #endregion
 
 #region Generate Email body content
@@ -79,7 +79,7 @@
         write-log -Message 'Job &Job History successful loaded' -Level 'info'
     }else{
 
-        write-log -Message 'Sample Dataset loaded and/or dryrun in effect ' -Level 'info'
+        write-log -Message 'Sample Dataset loaded and/or dryrun in effect'
         $mbody = New-Object PSObject -Property @{
            'Name' = $VeeamJobName
            'End Time' = $starttime

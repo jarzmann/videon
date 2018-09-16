@@ -84,7 +84,7 @@ function Write-Log
 
     Process 
     { 
-        #Write Director - Writes to File, Console or Both
+        #Rewrite - Writes to File, Console or Both
         function Rewrite($message)
         {
             if ($LogToFile) {$Message | Out-File -FilePath $Path -Append}
