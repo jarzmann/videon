@@ -6,29 +6,55 @@
     [ValidateSet("Production","Testing","Dryrun")] 
     [string]$RuntimeEnv="Production",
 
+    [Parameter(Mandatory=$false)]
+    [string]$VeeamJobName="Test",
+
     [Parameter(Mandatory=$false)] 
     [Alias('Dir')] 
     [string]$Directory="c:\videon\"
   ) 
 
 #Set-ExecutionPolicy unrestricted
+clear-host
+# Load Veeam snapin
+Add-PsSnapin -Name VeeamPSSnapIn -ErrorAction SilentlyContinue
 
 Import-Module -Name '.\_modules\write-log.psm1' -force
 
-clear-host
-
-#endregion
+write-log -Message "======================================================================================================================================="
 
 
 # Load Config
 . .\_modules\loadconfig.ps1
 #endregion
 
+# Connect to VBR server
+$global:w = Get-VBRServerSession
+
+if (!$w)
+{
+    $Credentials=IMPORT-CLIXML "c:\videon\_config\_sys\SecureCredentials.xml"
+
+    Connect-VBRServer -Credential $Credentials -Server $Config.VeeamServer
+   if ($w) {write-log -Message "Connected to Veeam Server"}
+}
+#endregion
+
 #region Run Mailer
-. .\_modules\Mailer.ps1
+. .\_modules\Mailer.ps1 -VeeamJobName $VeeamJobName
 #endregion
 
 #region Run Sure Backup Job
+<#
+$SureJob = Get-VSBJob -Name "1.     DB-OFCUBS <backup>"
+
+$SureJobState=$SureJob.FindLastSession().State
+
+if ($SureJobState -eq "Working")
+{
+WRITE-HOST "The sessionID for this job is: " $SureJob.Id
+}
+#>
 
 #endregion
 

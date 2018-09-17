@@ -16,7 +16,7 @@
 
     # Function StringFind - Used by Job History to find username & System
     function StringFind ($string, $firstkey, $secondkey) {
-        if (firstkey -eq "UserName")
+        if ($firstkey -eq "UserName")
         {
             $preset = 10
         } else {
@@ -67,12 +67,12 @@
     if($w)
     {
         write-log -Message 'Existing Veeam Server Session reused' -Level 'info'
-        $LoggedIn = $w.Split("\")
+        $LoggedIn = Get-VBRServerSession
         $mbody = New-Object PSObject -Property @{
            'Name' = $VeeamJobName
            'End Time' = $starttime
-           'Triggered By' = $w[1]
-           'Triggered From' = $w[0]
+           'Triggered By' = $LoggedIn.user
+           'Triggered From' = $LoggedIn.server
         }
         $job = Get-VBRJob -Name $VeeamJobName
         $jobhistory = Get-VBRBackupSession | Where {$_.jobId -eq $job.Id.Guid} | Sort EndTimeUTC -Descending | Select -First 5    
@@ -100,7 +100,6 @@
                'historyend' = Get-Date $history.EndTimeUTC -Format g
                'duration' = $duration
                'Result' = $history.Result
-               'User' = StringFind($History.AuxData, "UserName","UserDomainName")
             }
         }
 

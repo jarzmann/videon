@@ -25,6 +25,7 @@
   "LogToFile": "True",
   "LogFileName": "Logs",
 	"LogDirectory": "C:\\BkLog\\RunLogs\\",
+  "LogRetention": "Append",
 	"ZipDirectory": "C:\\ZIPBackup\\",
 	"BackupZipDirectory": "\\\\fsdh.net\\fsdh_fs\\FsdhDb\\Backup\\",
 	"EOMZipDirectory": "\\\\fsdh.net\\fsdh_fs\\FsdhDb\\EOM_Backup\\",

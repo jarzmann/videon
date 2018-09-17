@@ -1,0 +1,1 @@
+$MyCredentials = GET-CREDENTIAL -Credential "VEEAM\Administrator" | EXPORT-CLIXML C:\videon\_config\_sys\SecureCredentials.xml
