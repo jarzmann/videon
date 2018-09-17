@@ -12,7 +12,6 @@
   ) 
 
 #Set-ExecutionPolicy unrestricted
-#Import-Module -Name $Directory"_modules\merge-keys.psm1"
 
 Import-Module -Name '.\_modules\write-log.psm1' -force
 
@@ -26,7 +25,7 @@ clear-host
 
 
 #region Run Mailer
-#. .\_modules\Mailer.ps1
+. .\_modules\Mailer.ps1
 
 #endregion
 

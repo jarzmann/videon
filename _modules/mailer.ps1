@@ -57,10 +57,10 @@
     $EmailSubject = "$VeeamJobName Backup Task Completed"
     # Email formatting
     $style = '<style>BODY{font-family: Arial; font-size: 10pt;}'
-    $style += “TABLE{border: 1px solid black; border-collapse: collapse;}”
-    $style += “TH{border: 1px solid black; background: 54b948; padding: 5px;}”
-    $style += “TD{border: 1px solid black; padding: 5px;text-align: center;}”
-    $style += “</style>”
+    $style += 'TABLE{border: 1px solid black; border-collapse: collapse;}'
+    $style += 'TH{border: 1px solid black; background: 54b948; padding: 5px;}'
+    $style += 'TD{border: 1px solid black; padding: 5px;text-align: center;}'
+    $style += '</style>'
 #endregion
 
 #region Generate Email body content
@@ -110,12 +110,20 @@
 #endregion
 
 #region Send Email
-    $Message = New-Object System.Net.Mail.MailMessage $EmailFrom, $EmailTo
+    $Message = New-Object System.Net.Mail.MailMessage
+    $Message.From = "$EmailFrom"  
+    $Message.To.Add("$EmailTo") 
     $Message.Subject = $EmailSubject
     $Message.IsBodyHTML = [System.Convert]::ToBoolean($Config.FormatHTML)
     $message.Body = "$CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
-    $SMTP = New-Object Net.Mail.SmtpClient($SMTPServer)
-    $SMTP.Send($Message)
-    write-log -Message 'Mail sent' -Level 'info'
+    $SMTP = New-Object Net.Mail.SmtpClient($Config.SMTPServer, $Config.SMTPPort)
+    $SMTP.EnableSsl = [System.Convert]::ToBoolean($Config.SmtpEnableSSL)
+    $SMTP.Credentials = New-Object System.Net.NetworkCredential($Config.SmtpFrom, $Config.SmtpPass)
+    $SMTP
+    
+    $SMTP.Send($Message)<#
+    write-log -Message "Message Body : $CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
+    write-log -Message 'Mail sent' 
+    #>
 #endregion
 

@@ -1,0 +1,25 @@
+{
+  "_Info": [
+    "This is the EMAIL PROVIDERS JSON based Configuration for PROJECT GIDEON OPERATED VEEAM - VIDEON ",
+    "  ",
+    "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
+  ],
+  "gmail": {
+    "SmtpServer": "smtp.gmail.com",
+    "SmtpPass": "J!mru13$",
+    "SmtpUser": "me@feyijimi.com",
+    "Smtpfrom": "me@feyijimi.com",
+    "Smtpto": "me@feyijimi.com",
+    "SmtpPort": "587",
+    "SmtpEnableSSL": "True"
+  },
+  "fsdh": {
+    "SmtpServer": "email2.fsdhgroup.com",
+    "SmtpPass": "#Ch!ngyTv$$",
+    "SmtpUser": "ithelpdesk",
+    "Smtpfrom": "veeam@fsdhgroup.com",
+    "Smtpto": "fadewole@fsdhgroup.com",
+    "SmtpPort": "25",
+    "SmtpEnableSSL": "False"
+  }
+}
