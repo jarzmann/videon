@@ -99,7 +99,7 @@ $provider = $Config.SmtpProvider
 
 $global:EmailConfig = $AllEmail.$provider
   
-  $SysConfig.Email.psobject.Properties | ForEach-Object {
+  $Config.Email.psobject.Properties | ForEach-Object {
   $EmailConfig | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
   }
 

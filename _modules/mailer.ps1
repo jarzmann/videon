@@ -118,8 +118,8 @@
     $message.Body = "$CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
     $SMTP = New-Object Net.Mail.SmtpClient($EmailConfig.SMTPServer, $EmailConfig.SMTPPort)
     $SMTP.EnableSsl = [System.Convert]::ToBoolean($EmailConfig.SmtpEnableSSL)
-    $SMTP.Credentials = New-Object System.Net.NetworkCredential($EmailConfig.SmtpUser, $EmailConfig.SmtpPass)
-    #$SMTP
+    if ($Config.SmtpProvider -eq 'gmail') {$SMTP.Credentials = New-Object System.Net.NetworkCredential($EmailConfig.SmtpUser, $EmailConfig.SmtpPass)}
+    $SMTP
     
     $SMTP.Send($Message)
     write-log -Message "Message Body : $CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
