@@ -4,7 +4,7 @@
     param
     (
         [string]$VeeamJobName,
-        [string]$MailTo=$Config.Smtpto,
+        [string]$MailTo=$EmailConfig.Smtpto,
         [string]$VeeamServer=$Config.VeeamServer
     )
 
@@ -48,11 +48,11 @@
 
 #region Email Settings
     # Email SMTP server
-    $SMTPServer = $Config.SmtpServer
+    $SMTPServer = $EmailConfig.SmtpServer
     # Email FROM
-    $EmailFrom = $Config.Smtpfrom
+    $EmailFrom = $EmailConfig.Smtpfrom
     # Email TO
-    $EmailTo = $Config.Smtpto
+    $EmailTo = $EmailConfig.Smtpto
     # Email subject
     $EmailSubject = "$VeeamJobName Backup Task Completed"
     # Email formatting
@@ -111,19 +111,19 @@
 
 #region Send Email
     $Message = New-Object System.Net.Mail.MailMessage
-    $Message.From = "$EmailFrom"  
-    $Message.To.Add("$EmailTo") 
+    $Message.From = $EmailConfig.SmtpFrom 
+    $Message.To.Add($EmailConfig.Smtpto) 
     $Message.Subject = $EmailSubject
     $Message.IsBodyHTML = [System.Convert]::ToBoolean($Config.FormatHTML)
     $message.Body = "$CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
-    $SMTP = New-Object Net.Mail.SmtpClient($Config.SMTPServer, $Config.SMTPPort)
-    $SMTP.EnableSsl = [System.Convert]::ToBoolean($Config.SmtpEnableSSL)
-    $SMTP.Credentials = New-Object System.Net.NetworkCredential($Config.SmtpFrom, $Config.SmtpPass)
-    $SMTP
+    $SMTP = New-Object Net.Mail.SmtpClient($EmailConfig.SMTPServer, $EmailConfig.SMTPPort)
+    $SMTP.EnableSsl = [System.Convert]::ToBoolean($EmailConfig.SmtpEnableSSL)
+    $SMTP.Credentials = New-Object System.Net.NetworkCredential($EmailConfig.SmtpUser, $EmailConfig.SmtpPass)
+    #$SMTP
     
-    $SMTP.Send($Message)<#
+    $SMTP.Send($Message)
     write-log -Message "Message Body : $CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
     write-log -Message 'Mail sent' 
-    #>
+    
 #endregion
 

@@ -17,6 +17,9 @@
     # JSON dev system specific configuration filename to use
     $SysConfigFile = "$env:computername.json"
 
+    # JSON email configuration filename to use
+    $EmailConfigFile = "email.json"
+
     # JSON configuration filename for current date
     $curdate = Get-Date -format ddMMyyyy
     $CurrentConfigFile = "$curdate.json"
@@ -88,7 +91,19 @@ if ($EnvConfig)
       }
     }
 }
+#endregion
+
+#Load Email Config
+$AllEmail = Get-Content "$ConfigDirectory$EmailConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+$provider = $Config.SmtpProvider
+
+$global:EmailConfig = $AllEmail.$provider
+  
+  $SysConfig.Email.psobject.Properties | ForEach-Object {
+  $EmailConfig | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
+  }
+
 
 write-log -Message "$Config"
 
-#endregion
+

@@ -4,9 +4,9 @@
     "",
     "Please do not edit any fields without any permission of Infrastructure@fsdhgroup.com"
   ],
-  "SmtpServer": "email2.fsdhgroup.com",
-  "Smtpfrom": "veeam@fsdhgroup.com",
-  "Smtpto": "isteam@fsdhgroup.com",
+  "Email": {
+    "Smtpto": "isteam@fsdhgroup.com"
+  },
   "Environment": "Production",
   "FormatHTML": "True",
   "RunSureJob": "True",

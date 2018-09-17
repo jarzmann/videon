@@ -22,11 +22,10 @@ clear-host
 
 # Load Config
 . .\_modules\loadconfig.ps1
-
+#endregion
 
 #region Run Mailer
 . .\_modules\Mailer.ps1
-
 #endregion
 
 #region Run Sure Backup Job

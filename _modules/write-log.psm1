@@ -80,6 +80,8 @@ function Write-Log
 
         #Set Log file path
         $Path="$LogDirPath$LogFileName-$LogTime.log"
+
+        $Seperator = "***************************************************************************************************"
     } 
 
     Process 
@@ -88,6 +90,9 @@ function Write-Log
         function Rewrite($message)
         {
             if ($LogToFile) {$Message | Out-File -FilePath $Path -Append}
+            #if ($LogToFile) {$Seperator | Out-File -FilePath $Path -Append}
+            #Add-Content -Path $Path -Value ""
+
             if ($LogToConsole) 
             {
               # Write message to error, warning, or verbose pipeline and specify $LevelText 
