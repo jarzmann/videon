@@ -29,15 +29,7 @@ Start-Log
 #endregion
 
 # Connect to VBR server
-$w = Get-VBRServerSession
-
-if (!$w)
-{
-    $Credentials=IMPORT-CLIXML "c:\videon\_config\_sys\SecureCredentials.xml"
-
-    Connect-VBRServer -Credential $Credentials -Server $Config.VeeamServer
-   if ($w) {write-log -Message "Connected to Veeam Server"}
-}
+. .\_modules\veeamconnect.ps1
 #endregion
 
 #region Run Mailer

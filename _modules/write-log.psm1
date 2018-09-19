@@ -125,22 +125,19 @@ function Start-Log
   #Set Log file path
   $global:Path="$LogDirPath$LogFileName-$LogTime.log"
 
-  if ((Test-Path $Path) -and ($Config.LogRetention -eq "Overwrite")) 
+  if ((Test-Path $Path) -and ([System.Convert]::ToBoolean($Config.LogRetentionOverwrite))) 
   { 
       Remove-Item -Path $Path -Force 
-      Rewrite -Message "Deleting existing log file" -ConsoleOnly
+      Write-Output "Deleting existing log file"
   } 
  
   if (!(Test-Path $Path)) 
   { 
       $NewLogFile = New-Item $Path -Force -ItemType File
-      Rewrite -Message "Creating $Path" -ConsoleOnly
+      Write-Output "Creating $Path"
 
   } 
  
-
-#  Add-Content -Path $Path -Value ""
- # Add-Content -Path $Path -Value ""
   Add-Content -Path $Path -Value "***************************************************************************************************"
   Add-Content -Path $Path -Value "Started processing at [$([DateTime]::Now)]."
   Add-Content -Path $Path -Value "***************************************************************************************************"
