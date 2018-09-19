@@ -61,65 +61,100 @@ function Write-Log
          
         [Parameter(Mandatory=$false)] 
         [ValidateSet("Error","Warn","Info")] 
-        [string]$Level="Info", 
-         
-        [Parameter(Mandatory=$false)] 
-        [switch]$LogToConsole=[System.Convert]::ToBoolean($Config.LogToConsole), 
-
-        [Parameter(Mandatory=$false)] 
-        [switch]$LogToFile=[System.Convert]::ToBoolean($Config.LogToFile)      
+        [string]$Level="Info" 
     ) 
  
     Begin 
     { 
         # Set VerbosePreference to Continue so that verbose messages are displayed. 
         $VerbosePreference = $Config.VerbosePreference 
-
-        #Get Log file time
-        $LogTime = Get-Date -Format yyyyMMdd
-
-        #Set Log file path
-        $Path="$LogDirPath$LogFileName-$LogTime.log"
-
-        $Seperator = "***************************************************************************************************"
     } 
 
     Process 
     { 
-        #Rewrite - Writes to File, Console or Both
-        function Rewrite($message)
-        {
-            if ($LogToFile) {$Message | Out-File -FilePath $Path -Append}
-            #if ($LogToFile) {$Seperator | Out-File -FilePath $Path -Append}
-            #Add-Content -Path $Path -Value ""
-
-            if ($LogToConsole) 
-            {
-              # Write message to error, warning, or verbose pipeline and specify $LevelText 
-              switch ($Level) { 
-                'Error' {Write-Output $Message} 
-                'Warn' {Write-Warning $Message } 
-                'Info' {Write-Host $Message} 
-              } 
-            }
-        }
-
-        if (!(Test-Path $Path)) 
-        { 
-            $NewLogFile = New-Item $Path -Force -ItemType File
-            Rewrite "Creating $Path" 
-
-          } 
- 
         # Format Date for our Log File 
-        $FormattedDate = Get-Date -Format "yyyy-MM-dd HH:mm:ss" 
+        $FormattedDate = Get-Date -Format "HH:mm:ss" 
+
+        #Add TimeStamp to message if specified
+        If ([System.Convert]::ToBoolean($Config.LogTimeStamp) -eq $True ) {
+          #$Message = "$FormattedDate :      $Message"
+        }
  
         # Write log entry to $Path 
-        Rewrite "$FormattedDate $LevelText $Message"
+        Rewrite -Message "$Message"
     } 
     End 
     { 
     } 
 }
 
+#Rewrite - Writes to File, Console or Both
+function Rewrite
+{
 
+    [CmdletBinding()] 
+    Param 
+    ( 
+        [Parameter(Mandatory=$false)] 
+        [string]$Message,
+
+        [Parameter(Mandatory=$false)] 
+        [switch]$ConsoleOnly=$false
+    ) 
+   
+  if ($Config.LogToFile -and ($ConsoleOnly -eq $False)) {Add-Content -Path $Path -Value $Message}
+
+  if ($Config.LogToConsole) 
+  {
+    # Write message to error, warning, or verbose pipeline and specify $LevelText 
+    Write-Output $Message
+  } 
+}
+    
+
+function Start-Log
+{
+  $LogToConsole=[System.Convert]::ToBoolean($Config.LogToConsole)
+  $LogToFile=[System.Convert]::ToBoolean($Config.LogToFile)
+  $LogDirPath=$Config.LogDirectory
+  $LogFileName=$Config.LogFileName
+
+  #Get Log file time
+  $LogTime = Get-Date -Format yyyyMMdd
+
+  #Set Log file path
+  $global:Path="$LogDirPath$LogFileName-$LogTime.log"
+
+  if ((Test-Path $Path) -and ($Config.LogRetention -eq "Overwrite")) 
+  { 
+      Remove-Item -Path $Path -Force 
+      Rewrite -Message "Deleting existing log file" -ConsoleOnly
+  } 
+ 
+  if (!(Test-Path $Path)) 
+  { 
+      $NewLogFile = New-Item $Path -Force -ItemType File
+      Rewrite -Message "Creating $Path" -ConsoleOnly
+
+  } 
+ 
+
+#  Add-Content -Path $Path -Value ""
+ # Add-Content -Path $Path -Value ""
+  Add-Content -Path $Path -Value "***************************************************************************************************"
+  Add-Content -Path $Path -Value "Started processing at [$([DateTime]::Now)]."
+  Add-Content -Path $Path -Value "***************************************************************************************************"
+  Add-Content -Path $Path -Value ""
+  Add-Content -Path $Path -Value ""
+}
+
+function Stop-Log
+{
+  Add-Content -Path $Path -Value ""
+  Add-Content -Path $Path -Value ""
+  Add-Content -Path $Path -Value "***************************************************************************************************"
+  Add-Content -Path $Path -Value "Finished processing at [$([DateTime]::Now)]."
+  Add-Content -Path $Path -Value "***************************************************************************************************"
+  Add-Content -Path $Path -Value ""
+  Add-Content -Path $Path -Value ""
+}

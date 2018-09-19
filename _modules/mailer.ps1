@@ -29,7 +29,6 @@
     }
 
     # Clear console output
-    Clear-Host
 
     Import-Module -Name '.\_modules\write-log.psm1' -force
 
@@ -41,7 +40,7 @@
     }
 
     # Load Veeam snapin & Connect to Veeam
-#. .\_modules\veeamconnect.ps1
+. .\_modules\veeamconnect.ps1
 
     $starttime = Get-Date -format t
 #endregion
@@ -66,17 +65,19 @@
 #region Generate Email body content
     if($w)
     {
-        write-log -Message 'Existing Veeam Server Session reused' -Level 'info'
         $LoggedIn = Get-VBRServerSession
+        $server = $LoggedIn.server
+        $user = $LoggedIn.user
+        write-log -Message "Existing Veeam Server Session to $server reused"
         $mbody = New-Object PSObject -Property @{
            'Name' = $VeeamJobName
            'End Time' = $starttime
-           'Triggered By' = $LoggedIn.user
-           'Triggered From' = $LoggedIn.server
+           'Triggered By' = $user
+           'Triggered From' = $server
         }
         $job = Get-VBRJob -Name $VeeamJobName
-        $jobhistory = Get-VBRBackupSession | Where {$_.jobId -eq $job.Id.Guid} | Sort EndTimeUTC -Descending | Select -First 5    
-        write-log -Message 'Job &Job History successful loaded' -Level 'info'
+        $jobhistory = Get-VBRBackupSession | Where {($_.jobId -eq $job.Id.Guid) -and ($_.Result -ne "None")} | Sort EndTimeUTC -Descending | Select -First 5    
+        write-log -Message 'Job & Job History successful loaded' 
     }else{
 
         write-log -Message 'Sample Dataset loaded and/or dryrun in effect'
@@ -118,8 +119,9 @@
     $SMTP = New-Object Net.Mail.SmtpClient($EmailConfig.SMTPServer, $EmailConfig.SMTPPort)
     $SMTP.EnableSsl = [System.Convert]::ToBoolean($EmailConfig.SmtpEnableSSL)
     if ($Config.SmtpProvider -eq 'gmail') {$SMTP.Credentials = New-Object System.Net.NetworkCredential($EmailConfig.SmtpUser, $EmailConfig.SmtpPass)}
-    $SMTP
     
+    write-log -Message "$SMTP"
+
     $SMTP.Send($Message)
     write-log -Message "Message Body : $CurrentJob <br> <H2>Job History</H4> $HistoryJobs"
     write-log -Message 'Mail sent' 

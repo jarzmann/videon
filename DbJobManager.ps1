@@ -7,7 +7,7 @@
     [string]$RuntimeEnv="Production",
 
     [Parameter(Mandatory=$false)]
-    [string]$VeeamJobName="Test",
+    [string]$VeeamJobName="WinXP",
 
     [Parameter(Mandatory=$false)] 
     [Alias('Dir')] 
@@ -21,7 +21,7 @@ Add-PsSnapin -Name VeeamPSSnapIn -ErrorAction SilentlyContinue
 
 Import-Module -Name '.\_modules\write-log.psm1' -force
 
-write-log -Message "======================================================================================================================================="
+Start-Log
 
 
 # Load Config
@@ -29,7 +29,7 @@ write-log -Message "============================================================
 #endregion
 
 # Connect to VBR server
-$global:w = Get-VBRServerSession
+$w = Get-VBRServerSession
 
 if (!$w)
 {
@@ -72,3 +72,5 @@ WRITE-HOST "The sessionID for this job is: " $SureJob.Id
 #region Create Environment
 
 #endregion
+
+Stop-Log
