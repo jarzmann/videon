@@ -1,5 +1,18 @@
-#region Load Base Config
+  Param 
+  ( 
+    [Parameter(Mandatory=$false)]
+    [string]$JobName="WinXP",
 
+    [Parameter(Mandatory=$false)]
+    [ValidateNotNullOrEmpty()] 
+    [ValidateSet("Production","Testing","Dryrun")] 
+    [string]$RuntimeEnv="Production",
+
+    [Parameter(Mandatory=$false)]
+    [string]$Directory="c:\videon\"
+  ) 
+
+#region Load Base Config
     # Base Directory
     # This must match with the UpdateService/LocalePath entry ($Config.UpdateService.LocalePath)
     # in the JSON configuration file if you want to use the automated update/Distribution features!
@@ -19,6 +32,9 @@
 
     # JSON email configuration filename to use
     $EmailConfigFile = "email.json"
+
+    # JSON Veeam Jobs configuration filename to use
+    $VeeamJobsConfigFile = "vm_definition.json"
 
     # JSON configuration filename for current date
     $curdate = Get-Date -format ddMMyyyy
@@ -93,17 +109,26 @@ if ($EnvConfig)
 }
 #endregion
 
-#Load Email Config
+#region Load Email Config
 $AllEmail = Get-Content "$ConfigDirectory$EmailConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
 $provider = $Config.SmtpProvider
 
 $global:EmailConfig = $AllEmail.$provider
   
-  $Config.Email.psobject.Properties | ForEach-Object {
-  $EmailConfig | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
-  }
+$Config.Email.psobject.Properties | ForEach-Object {
+$EmailConfig | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
+}
+#endregion
 
+#region Load Veeam Job Details into Config
+$AllVeeamJobs = Get-Content "$ConfigDirectory$VeeamJobsConfigFile" -Raw -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue | ConvertFrom-Json -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+$CurrentJob = $AllVeeamJobs.$JobName
+write-log -Message "Current Veeam Job details: $CurrentJob"
 
-write-log -Message "$Config"
+$CurrentJob.psobject.Properties | ForEach-Object {
+$Config | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
+}
+
+write-log -Message "Final Config Parameters: $Config"
 
 

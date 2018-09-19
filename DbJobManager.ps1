@@ -1,17 +1,9 @@
 #region Load Job Parameters
   Param 
   ( 
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()] 
-    [ValidateSet("Production","Testing","Dryrun")] 
-    [string]$RuntimeEnv="Production",
 
     [Parameter(Mandatory=$false)]
-    [string]$VeeamJobName="WinXP",
-
-    [Parameter(Mandatory=$false)] 
-    [Alias('Dir')] 
-    [string]$Directory="c:\videon\"
+    [string]$JobName="WinXP"
   ) 
 
 #Set-ExecutionPolicy unrestricted
@@ -25,15 +17,15 @@ Start-Log
 
 
 # Load Config
-. .\_modules\loadconfig.ps1
+. .\_modules\loadconfig.ps1 -JobName $JobName
 #endregion
 
 # Connect to VBR server
-. .\_modules\veeamconnect.ps1
+#. .\_modules\veeamconnect.ps1
 #endregion
 
 #region Run Mailer
-. .\_modules\Mailer.ps1 -VeeamJobName $VeeamJobName
+#. .\_modules\Mailer.ps1 -VeeamJobName $VeeamJobName
 #endregion
 
 #region Run Sure Backup Job
