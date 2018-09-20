@@ -13,14 +13,12 @@
     "Description": "Production VM's"
   },
   "Db_HO": {
-    "VmName": "DB Head Office",
-    "Vcenter": "XX.XX.XX",
-    "SureJobName": "Name of the customer company - For future usage only",
-    "VeeamJobName": "YOR CUSTOMER NAME HERE",
-    "_Environment": "Valid is: Production, Dryrun, Leaduser, Testing, Development",
-    "Environment": "Production",
-    "_Support": "This value will be provided by the support team, never change this by yourself!",
-    "Support": "VALUE HERE IF NEEDED"
+    "VmName": "WinXP",
+    "SureJobName": "SureWinXP-DR",
+    "LongJobName": "WinXP HO",
+    "VeeamJobName": "WinXP",
+    "SnapshotJobName": "WinXP",
+    "RunSnapshotJob": "False"
   },
   "Db_B": {
     "_ConfigVersion": "Configuration Version - For future usage only",

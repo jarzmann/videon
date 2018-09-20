@@ -21,6 +21,8 @@
   "Environment": "Development",
   "RunSureJob": "True",
   "RunSnapshot": "True",
+  "RunZipJob": "False",
+  "ForceEOM": "False",
   "LogToConsole": "True",
   "LogToFile": "True",
   "LogFileName": "Logs",
@@ -28,8 +30,7 @@
   "LogRetentionOverwrite": "True",
   "LogTimeStamp": "True",
 	"ZipDirectory": "C:\\ZIPBackup\\",
-	"BackupZipDirectory": "\\\\fsdh.net\\fsdh_fs\\FsdhDb\\Backup\\",
-	"EOMZipDirectory": "\\\\fsdh.net\\fsdh_fs\\FsdhDb\\EOM_Backup\\",
+	"EOMZipDirectory": "C:\\EOMZIPBackup\\",
   "_Loglevel": "Valid is: ALL(6) < DEBUG(1) < INFO(2) < WARN(3) < ERROR(4) < FATAL(5) < OFF(0).",
   "Loglevel": "6",
   "VerbosePreference": "Continue"

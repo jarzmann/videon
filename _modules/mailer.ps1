@@ -53,7 +53,7 @@
     # Email TO
     $EmailTo = $EmailConfig.Smtpto
     # Email subject
-    $EmailSubject = "$VeeamJobName Backup Task Completed"
+    $EmailSubject = $Config.LongJobName+"Backup Task Completed"
     # Email formatting
     $style = '<style>BODY{font-family: Arial; font-size: 10pt;}'
     $style += 'TABLE{border: 1px solid black; border-collapse: collapse;}'
@@ -70,12 +70,12 @@
         $user = $LoggedIn.user
         write-log -Message "Existing Veeam Server Session to $server reused"
         $mbody = New-Object PSObject -Property @{
-           'Name' = $VeeamJobName
+           'Name' = $Config.LongJobName
            'End Time' = $starttime
            'Triggered By' = $user
            'Triggered From' = $server
         }
-        $job = Get-VBRJob -Name $VeeamJobName
+        $job = Get-VBRJob -Name $Config.VeeamJobName
         $jobhistory = Get-VBRBackupSession | Where {($_.jobId -eq $job.Id.Guid) -and ($_.Result -ne "None")} | Sort EndTimeUTC -Descending | Select -First 5    
         write-log -Message 'Job & Job History successful loaded' 
     }else{

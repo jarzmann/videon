@@ -21,3 +21,8 @@ Conditions
 
 ------------------------------------ BuildConfig --------------------------------------
 $UpdBody = $Body| ConvertTo-Json -Depth 10
+
+
+daily config parameters
+RunZipJob
+ForceEOM

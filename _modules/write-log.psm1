@@ -77,7 +77,7 @@ function Write-Log
 
         #Add TimeStamp to message if specified
         If ([System.Convert]::ToBoolean($Config.LogTimeStamp) -eq $True ) {
-          #$Message = "$FormattedDate :      $Message"
+          $Message = "$FormattedDate :      $Message"
         }
  
         # Write log entry to $Path 
@@ -102,12 +102,15 @@ function Rewrite
         [switch]$ConsoleOnly=$false
     ) 
    
-  if ($Config.LogToFile -and ($ConsoleOnly -eq $False)) {Add-Content -Path $Path -Value $Message}
+  if ($Config.LogToFile -and ($ConsoleOnly -eq $False)) {
+    Add-Content -Path $Path -Value "$Message`n"
+  }
 
   if ($Config.LogToConsole) 
   {
     # Write message to error, warning, or verbose pipeline and specify $LevelText 
-    Write-Output $Message
+    Write-Output "$Message`n"
+
   } 
 }
     
@@ -128,30 +131,24 @@ function Start-Log
   if ((Test-Path $Path) -and ([System.Convert]::ToBoolean($Config.LogRetentionOverwrite))) 
   { 
       Remove-Item -Path $Path -Force 
-      Write-Output "Deleting existing log file"
+      Write-Output "Deleting existing log file`n"
   } 
  
   if (!(Test-Path $Path)) 
   { 
       $NewLogFile = New-Item $Path -Force -ItemType File
-      Write-Output "Creating $Path"
+      Write-Output "Creating $Path`n"
 
   } 
  
   Add-Content -Path $Path -Value "***************************************************************************************************"
   Add-Content -Path $Path -Value "Started processing at [$([DateTime]::Now)]."
-  Add-Content -Path $Path -Value "***************************************************************************************************"
-  Add-Content -Path $Path -Value ""
-  Add-Content -Path $Path -Value ""
+  Add-Content -Path $Path -Value "***************************************************************************************************`n`n"
 }
 
 function Stop-Log
 {
-  Add-Content -Path $Path -Value ""
-  Add-Content -Path $Path -Value ""
-  Add-Content -Path $Path -Value "***************************************************************************************************"
+  Add-Content -Path $Path -Value "`n`n***************************************************************************************************"
   Add-Content -Path $Path -Value "Finished processing at [$([DateTime]::Now)]."
-  Add-Content -Path $Path -Value "***************************************************************************************************"
-  Add-Content -Path $Path -Value ""
-  Add-Content -Path $Path -Value ""
+  Add-Content -Path $Path -Value "***************************************************************************************************`n`n"
 }

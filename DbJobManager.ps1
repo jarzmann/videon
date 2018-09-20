@@ -21,32 +21,23 @@ Start-Log
 #endregion
 
 # Connect to VBR server
-#. .\_modules\veeamconnect.ps1
+. .\_modules\veeamconnect.ps1
 #endregion
 
 #region Run Mailer
-#. .\_modules\Mailer.ps1 -VeeamJobName $VeeamJobName
+#. .\_modules\Mailer.ps1
 #endregion
 
 #region Run Sure Backup Job
-<#
-$SureJob = Get-VSBJob -Name "1.     DB-OFCUBS <backup>"
-
-$SureJobState=$SureJob.FindLastSession().State
-
-if ($SureJobState -eq "Working")
-{
-WRITE-HOST "The sessionID for this job is: " $SureJob.Id
-}
-#>
-
+#. .\_modules\Surebackup.ps1
 #endregion
 
 #region Run  Snapshot Job
+#. .\_modules\Snapshot.ps1
 #endregion
 
 #region Run Zip Job
-
+. .\_modules\Zip.ps1
 #endregion
 
 #region Refresh Environment
