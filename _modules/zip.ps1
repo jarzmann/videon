@@ -17,21 +17,15 @@
       $folder = $Config.ZipDirectory
   }
 
-  write-log $folder
+  write-log "Zip folder - $folder"
   
  # write-log "Final EOM Parameters are EOM :$Conifg.RunZipJob"
 
   # VeeamZip if EOM or Force EOM or RunZipJob enabled
-  if ($EOM -or [System.Convert]::ToBoolean($Config.RunZipJob))
+  if ($EOM -or ([System.Convert]::ToBoolean($Config.RunZipJob)))
   {   
-      if (!(Test-Path $folder))
-      {
-        New-Item -ItemType "directory" -Path $folder
-        Write-log "Creating $folder"
-      }else{
-        #file maintenance activities - e,g delete old files
-      } 
       $vm = Find-VBRViEntity -Name $Config.VmName
+      $VmName = $Config.VmName
       Start-VBRZip -Entity $vm -Compression 9 -DisableQuiesce -Folder $folder -RunAsync
-      write-log "$comment for $Config.VmName is running!"
+      write-log "$comment for $VmName is running!"
   }

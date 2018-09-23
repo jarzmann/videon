@@ -25,11 +25,11 @@ Start-Log
 #endregion
 
 #region Run Mailer
-#. .\_modules\Mailer.ps1
+. .\_modules\Mailer.ps1
 #endregion
 
 #region Run Sure Backup Job
-#. .\_modules\Surebackup.ps1
+. .\_modules\Surebackup.ps1
 #endregion
 
 #region Run  Snapshot Job
@@ -45,7 +45,7 @@ Start-Log
 #endregion
 
 #region Create Environment
-
+. .\_modules\createenv.ps1
 #endregion
 
-Stop-Log
+Stop-Log 

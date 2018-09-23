@@ -53,7 +53,7 @@
     # Email TO
     $EmailTo = $EmailConfig.Smtpto
     # Email subject
-    $EmailSubject = $Config.LongJobName+"Backup Task Completed"
+    $EmailSubject = $Config.LongJobName+" Backup Task Completed"
     # Email formatting
     $style = '<style>BODY{font-family: Arial; font-size: 10pt;}'
     $style += 'TABLE{border: 1px solid black; border-collapse: collapse;}'
@@ -120,7 +120,9 @@
     $SMTP.EnableSsl = [System.Convert]::ToBoolean($EmailConfig.SmtpEnableSSL)
     if ($Config.SmtpProvider -eq 'gmail') {$SMTP.Credentials = New-Object System.Net.NetworkCredential($EmailConfig.SmtpUser, $EmailConfig.SmtpPass)}
     
-    write-log -Message "$SMTP"
+    write-log -Message $SMTP
+
+    $SMTP
 
     $SMTP.Send($Message)
     write-log -Message "Message Body : $CurrentJob <br> <H2>Job History</H4> $HistoryJobs"

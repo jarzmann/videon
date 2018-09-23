@@ -7,6 +7,6 @@
     # Create session if none exists
     if (!$w)
     {
-        $Credentials=IMPORT-CLIXML C:\scripts\xml\SecureCredentials.xml
-        Connect-VBRServer -Credential $Credentials -Server $VeeamServer
+        $Credentials=IMPORT-CLIXML C:\videon\_config\_sys\SecureCredentials.xml
+        Connect-VBRServer -Credential $Credentials -Server $Config.VeeamServer
     }

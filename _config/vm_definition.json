@@ -14,11 +14,12 @@
   },
   "Db_HO": {
     "VmName": "WinXP",
-    "SureJobName": "SureWinXP-DR",
+    "SureJobName": "SureWinXP",
     "LongJobName": "WinXP HO",
     "VeeamJobName": "WinXP",
-    "SnapshotJobName": "WinXP",
-    "RunSnapshotJob": "False"
+    "SnapshotJobName": "WinXP_Snap",
+    "RunSnapshotJob": "False",
+    "RunSureJob": "False"
   },
   "Db_B": {
     "_ConfigVersion": "Configuration Version - For future usage only",

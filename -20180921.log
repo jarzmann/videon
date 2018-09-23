@@ -1,0 +1,60 @@
+***************************************************************************************************
+Started processing at [09/21/2018 14:11:02].
+***************************************************************************************************
+
+
+14:11:04 :      Base Config file loaded
+
+14:11:04 :      Runtime Environment Config file {Production.json} loaded
+
+14:11:04 :      Config file for DEVOPS {DEVOPS.json} loaded!  --
+
+14:11:04 :      --  No configuration file for current day!  --
+
+14:11:04 :      Current Veeam Job details: @{VmName=WinXP; SureJobName=SureWinXP; LongJobName=WinXP HO; VeeamJobName=WinXP; SnapshotJobName=WinXP_Snap; RunSnapshotJob=False}
+
+14:11:04 :      Final Config Parameters: @{RunZipJob=False; ForceEOM=False; LogFileName=Logs; LogTimeStamp=True; _Loglevel=Valid is: ALL(6) < DEBUG(1) < INFO(2) < WARN(3) < ERROR(4) < FATAL(5) < OFF(0).; FormatHTML=True; RunSureJob=True; RunSnapshot=True; LogToFile=True; _Info=System.Object[]; InternalInfo=; Email=; SmtpProvider=gmail; VeeamServer=192.168.0.3; Environment=Development; LogDirectory=C:\BkLog\RunLogs\; LogRetentionOverwrite=True; ZipDirectory=C:\ZIPBackup\; EOMZipDirectory=C:\EOMZIPBackup\; Loglevel=6; LogToConsole=True; VerbosePreference=Continue; VmName=WinXP; SureJobName=SureWinXP; LongJobName=WinXP HO; VeeamJobName=WinXP; SnapshotJobName=WinXP_Snap; RunSnapshotJob=False}
+
+14:11:20 :      Sample Dataset loaded and/or dryrun in effect
+
+14:11:20 :      System.Net.Mail.SmtpClient
+
+14:11:25 :      Message Body : <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>BODY{font-family: Arial; font-size: 10pt;}TABLE{border: 1px solid black; border-collapse: collapse;}TH{border: 1px solid black; background: 54b948; padding: 5px;}TD{border: 1px solid black; padding: 5px;text-align: center;}</style>
+</head><body>
+<table>
+<colgroup><col/><col/><col/><col/></colgroup>
+<tr><th>Name</th><th>End Time</th><th>Triggered By</th><th>Triggered From</th></tr>
+<tr><td></td><td>2:11 PM</td><td>Veeam Admin</td><td>Veeam Console</td></tr>
+</table>
+</body></html>
+ <br> <H2>Job History</H4> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>BODY{font-family: Arial; font-size: 10pt;}TABLE{border: 1px solid black; border-collapse: collapse;}TH{border: 1px solid black; background: 54b948; padding: 5px;}TD{border: 1px solid black; padding: 5px;text-align: center;}</style>
+</head><body>
+<table>
+</table>
+</body></html>
+
+
+14:11:25 :      Mail sent
+
+14:14:10 :      SureWinXP
+
+14:14:10 :      Run snapshot job for {@{RunZipJob=False; ForceEOM=False; LogFileName=Logs; LogTimeStamp=True; _Loglevel=Valid is: ALL(6) < DEBUG(1) < INFO(2) < WARN(3) < ERROR(4) < FATAL(5) < OFF(0).; FormatHTML=True; RunSureJob=True; RunSnapshot=True; LogToFile=True; _Info=System.Object[]; InternalInfo=; Email=; SmtpProvider=gmail; VeeamServer=192.168.0.3; Environment=Development; LogDirectory=C:\BkLog\RunLogs\; LogRetentionOverwrite=True; ZipDirectory=C:\ZIPBackup\; EOMZipDirectory=C:\EOMZIPBackup\; Loglevel=6; LogToConsole=True; VerbosePreference=Continue; VmName=WinXP; SureJobName=SureWinXP; LongJobName=WinXP HO; VeeamJobName=WinXP; SnapshotJobName=WinXP_Snap; RunSnapshotJob=False}.SnapshotJobName} is set to @{RunZipJob=False; ForceEOM=False; LogFileName=Logs; LogTimeStamp=True; _Loglevel=Valid is: ALL(6) < DEBUG(1) < INFO(2) < WARN(3) < ERROR(4) < FATAL(5) < OFF(0).; FormatHTML=True; RunSureJob=True; RunSnapshot=True; LogToFile=True; _Info=System.Object[]; InternalInfo=; Email=; SmtpProvider=gmail; VeeamServer=192.168.0.3; Environment=Development; LogDirectory=C:\BkLog\RunLogs\; LogRetentionOverwrite=True; ZipDirectory=C:\ZIPBackup\; EOMZipDirectory=C:\EOMZIPBackup\; Loglevel=6; LogToConsole=True; VerbosePreference=Continue; VmName=WinXP; SureJobName=SureWinXP; LongJobName=WinXP HO; VeeamJobName=WinXP; SnapshotJobName=WinXP_Snap; RunSnapshotJob=False}.RunSnapshotJob.
+ Offical Work Hours : False
+
+14:14:10 :       Job @{RunZipJob=False; ForceEOM=False; LogFileName=Logs; LogTimeStamp=True; _Loglevel=Valid is: ALL(6) < DEBUG(1) < INFO(2) < WARN(3) < ERROR(4) < FATAL(5) < OFF(0).; FormatHTML=True; RunSureJob=True; RunSnapshot=True; LogToFile=True; _Info=System.Object[]; InternalInfo=; Email=; SmtpProvider=gmail; VeeamServer=192.168.0.3; Environment=Development; LogDirectory=C:\BkLog\RunLogs\; LogRetentionOverwrite=True; ZipDirectory=C:\ZIPBackup\; EOMZipDirectory=C:\EOMZIPBackup\; Loglevel=6; LogToConsole=True; VerbosePreference=Continue; VmName=WinXP; SureJobName=SureWinXP; LongJobName=WinXP HO; VeeamJobName=WinXP; SnapshotJobName=WinXP_Snap; RunSnapshotJob=False}.SnapshotJobName did not run!.
+
+14:14:10 :      C:\ZIPBackup\
+
+
+
+***************************************************************************************************
+Finished processing at [09/21/2018 14:14:10].
+***************************************************************************************************
+
+

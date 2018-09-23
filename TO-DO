@@ -1,2 +1,7 @@
 #	Add capabilty to enable veeamlog collection for job or vm
 #	file sanitation on zip directories
+
+install powercli on server : Install-Module -Name VMware.PowerCLI –Scope CurrentUser
+Import-Module VMware.PowerCLI
+
+Use powercli to detach restored vm's from network before w
