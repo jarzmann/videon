@@ -4,4 +4,6 @@
 install powercli on server : Install-Module -Name VMware.PowerCLI –Scope CurrentUser
 Import-Module VMware.PowerCLI
 
-Use powercli to detach restored vm's from network before w
+Use powercli to detach restored vm's from network before startig up
+
+Add miigrate Instant Module to migrate all instant jobs.
